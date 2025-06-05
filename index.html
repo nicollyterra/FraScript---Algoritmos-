@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turfe Amigo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400..900&family=Permanent+Marker&family=Pixelify+Sans:wght@400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Special+Gothic+Expanded+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+
+<body>
+    
+ <video autoplay muted loop id="background-video" class="video-mine">
+    <source src="./imagens/videodefundo.mp4" type="video/mp4">
+    Seu navegador não suporta vídeo em background.
+  </video>
+
+    <div class="overlay"></div>
+
+
+    <div id="ipt_inicio" class="inicio">
+        <div class="titulo">
+            <img src="./imagens/frascript.svg" alt="">
+        </div>
+        <div class="titulo-imagem">
+            <img src="./imagens/turfe.svg" alt="">
+        </div>
+        <div class="box">
+            <button onclick="iniciar()">Iniciar</button>
+        </div>
+        
+    </div>
+
+    <div id="pt2" style="display: none;">
+
+        <div class="boxpt1">
+            <div class="geral">
+            <p>insira a quantidade de cavalos</p>
+            <input type="number" id="ipt_Qtd_cavalos">
+            <button onclick="confirmarQtd_cavalos()">Confirmar</button>
+            <button onclick="mostrarPt3()">Próxima</button>
+        </div>
+        </div>
+        
+    </div>
+
+    <div id="pt3" style="display: none;">
+        <p>Insira o nome dos cavalos</p>
+        <input id="ipt_nomeCavalo">
+        <button onclick="cadastroNome()">Cadastrar</button>
+        <button onclick="mostrarPt4()">Próxima</button>
+    </div>
+
+    <div id="pt4" style="display: none;">
+        <p>Quantas voltas irão ser?</p>
+        <input type="number" id="qtd_voltas">
+        <button onclick="confirmar()">Confirmar</button>
+    </div>
+
+</body>
+
+</html>
+<script>
+
+    var divinicio = document.getElementById("ipt_inicio");
+    var divpt2 = document.getElementById("pt2");
+    var divpt3 = document.getElementById("pt3");
+    var divFinal = document.getElementById("pt4");
+    // funções de esconder
+    function iniciar() {
+        divinicio.style.display = "none";
+        divpt2.style.display = "block";
+    }
+
+    // Função para ir para pt3
+    function mostrarPt3() {
+        divpt2.style.display = "none";
+        divpt3.style.display = "block";
+    }
+
+    // Função para ir para pt4
+    function mostrarPt4() {
+        divpt3.style.display = "none";
+        divFinal.style.display = "block";
+    }
+
+
+    var nome_cavalos = [];
+    var qtdCavalos = 0;
+    var voltas = [];
+
+    function confirmarQtd_cavalos() {
+
+        if (ipt_Qtd_cavalos.value < 2 || ipt_Qtd_cavalos.value > 6) {
+            alert("Insira uma quantidade entre 2 e 6")
+            ipt_Qtd_cavalos.value = ""
+        }
+        else {
+            qtdCavalos = Number(ipt_Qtd_cavalos.value)
+            alert('Nicolly e glen, passem para a proxima tela')
+            qtdCavalos.value = ''
+        }
+        //DISPLAY NONE
+        inicio.style.display = 'block';
+    }
+
+    function cadastroNome() {
+
+        var nome = ipt_nomeCavalo.value
+
+        if (ipt_nomeCavalo.value == "") {
+            alert("insira um nome primeiro")
+        } else {
+            nome_cavalos.push(nome)
+            alert("Nome cadastrado")
+            ipt_nomeCavalo.value = ""
+        }
+        if (nome_cavalos.length == Number(qtdCavalos)) {
+            alert("Todos cavalos foram cadastrados")
+            //display none
+            alert('Agora coloquem para a proxima pagina denovo')
+        }
+    }
+
+    function confirmar() {
+        if (qtd_voltas.value < 5 || qtd_voltas.value > 10)
+            alert("Insira uma quantidade entre 5 e 10")
+        else {
+            qtdVoltas = Number(qtd_voltas.value)
+            alert('Nicolly e glen, passem para a proxima tela')
+            qtd_voltas.value = ''
+        }
+        //DISPLAY NONE
+    }
+
+</script>
