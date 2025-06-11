@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -43,7 +43,6 @@
             <p>insira a quantidade de cavalos</p>
             <input type="number" id="ipt_Qtd_cavalos">
             <button onclick="confirmarQtd_cavalos()">Confirmar</button>
-            <button onclick="mostrarPt3()">Próxima</button>
         </div>
         </div>
         
@@ -53,13 +52,21 @@
         <p>Insira o nome dos cavalos</p>
         <input id="ipt_nomeCavalo">
         <button onclick="cadastroNome()">Cadastrar</button>
-        <button onclick="mostrarPt4()">Próxima</button>
+  
     </div>
 
     <div id="pt4" style="display: none;">
         <p>Quantas voltas irão ser?</p>
         <input type="number" id="qtd_voltas">
         <button onclick="confirmar()">Confirmar</button>
+    </div>
+
+     <div id="pt5" style="display: none;">
+        <button onclick="corrida()">Simular corrida!</button>
+    </div>
+
+         <div id="pt6" style="display: none;">
+      Resultado corrida: <span id="result"></span>
     </div>
 
 </body>
@@ -71,6 +78,8 @@
     var divpt2 = document.getElementById("pt2");
     var divpt3 = document.getElementById("pt3");
     var divFinal = document.getElementById("pt4");
+    var divsimular  = document.getElementById("pt5");
+    var divpt6  = document.getElementById("pt6");
     // funções de esconder
     function iniciar() {
         divinicio.style.display = "none";
@@ -88,10 +97,19 @@
         divpt3.style.display = "none";
         divFinal.style.display = "block";
     }
+     function mostrarPt5() {
+        divFinal.style.display = "none";
+        divsimular.style.display = "block";
+    }
+       function mostrarPt6() {
+        divsimular.style.display = "none";
+        divpt6.style.display = "block";
+    }
 
 
     var nome_cavalos = [];
     var qtdCavalos = 0;
+    var qtdVoltas = 0
     var voltas = [];
 
     function confirmarQtd_cavalos() {
@@ -102,8 +120,9 @@
         }
         else {
             qtdCavalos = Number(ipt_Qtd_cavalos.value)
-            alert('Nicolly e glen, passem para a proxima tela')
-            qtdCavalos.value = ''
+            alert('Quantidade de cavalos selecionada!' + ' ' + qtdCavalos)
+            mostrarPt3();
+            ipt_Qtd_cavalos.value = ''
         }
         //DISPLAY NONE
         inicio.style.display = 'block';
@@ -122,8 +141,7 @@
         }
         if (nome_cavalos.length == Number(qtdCavalos)) {
             alert("Todos cavalos foram cadastrados")
-            //display none
-            alert('Agora coloquem para a proxima pagina denovo')
+            mostrarPt4();
         }
     }
 
@@ -132,10 +150,47 @@
             alert("Insira uma quantidade entre 5 e 10")
         else {
             qtdVoltas = Number(qtd_voltas.value)
-            alert('Nicolly e glen, passem para a proxima tela')
             qtd_voltas.value = ''
+            mostrarPt5();
         }
-        //DISPLAY NONE
+
     }
+    function corrida() {
+         mostrarPt6();
+        var temposAcumulados = {};
+        for (var k = 0; k < nome_cavalos.length; k++) {
+            var nome = nome_cavalos[k];
+            temposAcumulados[nome] = 0.0;
+        }
+       
+        
+        for (var i = 1; i <= qtdVoltas; i++) {
+            var mensagemVolta = "Volta " + String(i).padStart(1, '0') + "\n";
+            
+            var temposVoltaAtual = {};
+            
+            for (var j = 0; j < nome_cavalos.length; j++) {
+            var nomeCavalo = nome_cavalos[j];
+            var tempoAleatorio = Math.random() * 10;
+            temposVoltaAtual[nomeCavalo] = tempoAleatorio;
+            temposAcumulados[nomeCavalo] += tempoAleatorio;
+        }
+
+        var cavalosOrdenadosPorAcumulado = Object.entries(temposAcumulados).sort(function(a, b) {
+            return a[1] - b[1];
+        });
+
+        for (var l = 0; l < cavalosOrdenadosPorAcumulado.length; l++) {
+            var entrada = cavalosOrdenadosPorAcumulado[l];
+            var nomeDoCavalo = entrada[0];
+            var tempoVoltaAtualDoCavalo = temposVoltaAtual[nomeDoCavalo];
+            var posicaoRanking = l + 1;
+
+           result.innerHTML +=  '<br>' + mensagemVolta + ':' + '<br>' + nomeDoCavalo + " - " + tempoVoltaAtualDoCavalo.toFixed(2) + " - Posição:" + String(posicaoRanking).padStart(2, '0');
+        }
+
+
+    }
+}
 
 </script>
